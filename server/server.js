@@ -1,22 +1,32 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
-var favicon = require('serve-favicon');
 const socketIO = require('socket.io');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
-var io= socketIO(server);
+var io = socketIO(server);
 
 app.use(express.static(publicPath));
-app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
   console.log('New user connected');
+  socket.emit('newMessage',{
+    from:'e@example.com',
+    text:'Hey whatsup'
+  });
+
+socket.on('createMessage',(message)=>{
+  console.log('create message',message);
+});
+
+  socket.on('disconnect', () => {
+    console.log('User was disconnected');
+  });
 });
 
 server.listen(port, () => {
-  console.log(`Started on port ${port}`);
+  console.log(`Server is up on ${port}`);
 });
