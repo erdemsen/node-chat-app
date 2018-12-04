@@ -18,7 +18,7 @@ function scrollToBottom() {
 socket.on('connect', function() {
 
   var params = jQuery.deparam(window.location.search);
-console.log(params);
+  params.room=params.room.toUpperCase();
   socket.emit('join', params, function(err) {
     if (err) {
       alert(err);
@@ -69,7 +69,6 @@ jQuery('#message-form').on('submit', function(e) {
   e.preventDefault();
   var messageTextBox = jQuery('[name=message]');
   socket.emit('createMessage', {
-    from: 'User',
     text: messageTextBox.val()
   }, function() {
     messageTextBox.val('')

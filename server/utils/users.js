@@ -40,6 +40,16 @@ class Users {
     return user;
   }
 
+  getUserCountByName(name,room){
+    console.log('fonksiyona girdi');
+    console.log(this.users);
+    var user = this.users.filter((user)=>{
+      return user.name==name && user.room==room;
+    });
+    console.log(`Users from getusercount func ${user}`);
+    return user.length;
+  }
+
   getUserList(room) {
     var users = this.users.filter((user) => {
       return user.room === room;
