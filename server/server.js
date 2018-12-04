@@ -30,6 +30,7 @@ io.on('connection', (socket) => {
     if (!isRealString(params.name) || !isRealString(params.room)) {
       callback('Name and room name are required');
     }
+    console.log(`room list: ${users.getRoomList()}`);
     //if name used by another user than alert
     if(users.getUserCountByName(params.name,params.room)>0)
     {
@@ -40,6 +41,7 @@ io.on('connection', (socket) => {
     users.addUSer(socket.id, params.name, params.room); //add user according to room name
 
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    io.emit('updateRoomList',users.getRoomList());
     //yanlızca o odadakilere kullanıcı katıldı bildirimi göndermek
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
     socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} joined`));

@@ -1,13 +1,5 @@
 var users = [];
 
-//addUser (id,name,room)
-
-//removeUser(id)
-
-//getUser
-
-//getUSerList
-
 class Users {
   constructor() {
     this.users = [];
@@ -41,12 +33,9 @@ class Users {
   }
 
   getUserCountByName(name,room){
-    console.log('fonksiyona girdi');
-    console.log(this.users);
     var user = this.users.filter((user)=>{
       return user.name==name && user.room==room;
     });
-    console.log(`Users from getusercount func ${user}`);
     return user.length;
   }
 
@@ -58,6 +47,11 @@ class Users {
       return user.name;
     });
     return namesArray;
+  }
+
+  getRoomList(){
+    var uniqueRoomList = [...new Set(this.users.map(item=>item.room))];
+    return uniqueRoomList;
   }
 }
 
